@@ -1,0 +1,6 @@
+applications:
+- name: legacrm
+  path: target/legacrm-0.0.1-SNAPSHOT.jar
+  memory: 768m
+  services:
+  - legacrm-db # cf create-service cleardb spark legacrm-db

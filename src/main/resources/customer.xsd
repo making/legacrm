@@ -1,0 +1,64 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://customer.legacrm.poc.example.com"
+           targetNamespace="http://customer.legacrm.poc.example.com" elementFormDefault="qualified">
+
+    <xs:element name="getMemberRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="membershipNumber" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getMemberResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="member" type="tns:member"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="member">
+        <xs:sequence>
+            <xs:element name="address" type="xs:string" minOccurs="0"/>
+            <xs:element name="authLogin" type="tns:authLogin" minOccurs="0"/>
+            <xs:element name="birthday" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="creditNo" type="xs:string" minOccurs="0"/>
+            <xs:element name="creditTerm" type="xs:string" minOccurs="0"/>
+            <xs:element name="creditType" type="tns:creditType" minOccurs="0"/>
+            <xs:element name="currentPassword" type="xs:string" minOccurs="0"/>
+            <xs:element name="gender" type="tns:gender" minOccurs="0"/>
+            <xs:element name="kanaFamilyName" type="xs:string" minOccurs="0"/>
+            <xs:element name="kanaGivenName" type="xs:string" minOccurs="0"/>
+            <xs:element name="kanjiFamilyName" type="xs:string" minOccurs="0"/>
+            <xs:element name="kanjiGivenName" type="xs:string" minOccurs="0"/>
+            <xs:element name="mail" type="xs:string" minOccurs="0"/>
+            <xs:element name="membershipNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="tel" type="xs:string" minOccurs="0"/>
+            <xs:element name="zipCode" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="authLogin">
+        <xs:sequence>
+            <xs:element name="lastPassword" type="xs:string" minOccurs="0"/>
+            <xs:element name="loginDateTime" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="loginFlg" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="membershipNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="creditType">
+        <xs:sequence>
+            <xs:element name="creditFirm" type="xs:string" minOccurs="0"/>
+            <xs:element name="creditTypeCd" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="gender">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="M"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
