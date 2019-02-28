@@ -17,6 +17,41 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="createMemberRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="member" type="tns:member"/>
+                <xs:element name="rawPassword" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createMemberResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="member" type="tns:member"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateMemberRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="member" type="tns:member"/>
+                <xs:element name="rawPassword" type="xs:string" minOccurs="0"/>
+                <xs:element name="currentPassword" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateMemberResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="member" type="tns:member"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:complexType name="member">
         <xs:sequence>
             <xs:element name="address" type="xs:string" minOccurs="0"/>
