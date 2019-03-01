@@ -27,9 +27,10 @@ public class MemberRepository {
 			.setAddress(rs.getString("ADDRESS")) //
 			.setMail(rs.getString("MAIL")) //
 			.setCreditNo(rs.getString("CREDIT_NO")) //
+			.setCreditTerm(rs.getString("CREDIT_TERM")) //
 			.setCreditType(new CreditTypeBuilder() //
 					.setCreditTypeCd(rs.getString("CREDIT_TYPE_CD")) //
-					.setCreditFirm(rs.getString("CREDIT_TERM")) //
+					.setCreditFirm(rs.getString("CREDIT_FIRM")) //
 					.createCreditType()) //
 			.setCurrentPassword(rs.getString("PASSWORD")) //
 			.setAuthLogin(new AuthLoginBuilder() //
@@ -46,7 +47,7 @@ public class MemberRepository {
 
 	public List<Member> findAll() {
 		return this.jdbcTemplate.query(
-				"select m.CUSTOMER_NO, KANJI_FAMILY_NAME, KANJI_GIVEN_NAME, KANA_FAMILY_NAME, KANA_GIVEN_NAME, BIRTHDAY, GENDER, TEL, ZIP_CODE, ADDRESS, MAIL, CREDIT_NO, CREDIT_TYPE_CD, CREDIT_TERM, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG from MEMBER m, MEMBER_LOGIN l WHERE m.CUSTOMER_NO = l.CUSTOMER_NO",
+				"select m.CUSTOMER_NO, KANJI_FAMILY_NAME, KANJI_GIVEN_NAME, KANA_FAMILY_NAME, KANA_GIVEN_NAME, BIRTHDAY, GENDER, TEL, ZIP_CODE, ADDRESS, MAIL, CREDIT_NO, m.CREDIT_TYPE_CD, CREDIT_TERM, CREDIT_FIRM, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG from MEMBER m, MEMBER_LOGIN l, CREDIT_TYPE c WHERE m.CUSTOMER_NO = l.CUSTOMER_NO AND m.CREDIT_TYPE_CD = c.CREDIT_TYPE_CD",
 				this.memberRowMapper);
 	}
 
@@ -54,7 +55,7 @@ public class MemberRepository {
 		int number = Integer.parseInt(membershipNumber);
 		try {
 			return Optional.of(this.jdbcTemplate.queryForObject(
-					"select m.CUSTOMER_NO, KANJI_FAMILY_NAME, KANJI_GIVEN_NAME, KANA_FAMILY_NAME, KANA_GIVEN_NAME, BIRTHDAY, GENDER, TEL, ZIP_CODE, ADDRESS, MAIL, CREDIT_NO, CREDIT_TYPE_CD, CREDIT_TERM, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG from MEMBER m, MEMBER_LOGIN l WHERE m.CUSTOMER_NO = ? AND m.CUSTOMER_NO = l.CUSTOMER_NO",
+					"select m.CUSTOMER_NO, KANJI_FAMILY_NAME, KANJI_GIVEN_NAME, KANA_FAMILY_NAME, KANA_GIVEN_NAME, BIRTHDAY, GENDER, TEL, ZIP_CODE, ADDRESS, MAIL, CREDIT_NO, m.CREDIT_TYPE_CD, CREDIT_TERM, CREDIT_FIRM, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG from MEMBER m, MEMBER_LOGIN l, CREDIT_TYPE c WHERE m.CUSTOMER_NO = ? AND m.CUSTOMER_NO = l.CUSTOMER_NO AND m.CREDIT_TYPE_CD = c.CREDIT_TYPE_CD",
 					this.memberRowMapper, number));
 		}
 		catch (EmptyResultDataAccessException e) {
