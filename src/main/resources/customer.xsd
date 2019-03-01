@@ -56,7 +56,7 @@
         <xs:sequence>
             <xs:element name="address" type="xs:string" minOccurs="0"/>
             <xs:element name="authLogin" type="tns:authLogin" minOccurs="0"/>
-            <xs:element name="birthday" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="birthday" type="xs:date" minOccurs="0"/>
             <xs:element name="creditNo" type="xs:string" minOccurs="0"/>
             <xs:element name="creditTerm" type="xs:string" minOccurs="0"/>
             <xs:element name="creditType" type="tns:creditType" minOccurs="0"/>

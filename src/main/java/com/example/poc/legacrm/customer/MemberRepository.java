@@ -1,5 +1,6 @@
 package com.example.poc.legacrm.customer;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class MemberRepository {
 			.setAuthLogin(new AuthLoginBuilder() //
 					.setPassword(rs.getString("PASSWORD")) //
 					.setLastPassword(rs.getString("LAST_PASSWORD")) //
-					.setLoginDateTime(rs.getDate("LOGIN_DATE_TIME").toLocalDate()) //
+					.setLoginDateTime(rs.getTimestamp("LOGIN_DATE_TIME").toInstant()) //
 					.setLoginFlg(rs.getBoolean("LOGIN_FLG")) //
 					.createAuthLogin()) //
 			.createMember();
@@ -76,7 +77,7 @@ public class MemberRepository {
 		this.jdbcTemplate.update(
 				"INSERT INTO MEMBER_LOGIN (CUSTOMER_NO, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG) VALUES (?, ?, ?, ?, ?)",
 				id, authLogin.getPassword(), authLogin.getLastPassword(),
-				authLogin.getLoginDateTime(), authLogin.isLoginFlg());
+				Timestamp.from(authLogin.getLoginDateTime()), authLogin.isLoginFlg());
 		member.setMembershipNumber(String.format("%10d", id));
 		return member;
 	}

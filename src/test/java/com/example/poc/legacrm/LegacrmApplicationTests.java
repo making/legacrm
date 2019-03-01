@@ -1,6 +1,7 @@
 package com.example.poc.legacrm;
 
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import com.example.poc.legacrm.customer.AuthLoginBuilder;
@@ -55,7 +56,8 @@ public class LegacrmApplicationTests {
 					.setMembershipNumber("1111111111111111") //
 					.setPassword("demodemo") //
 					.setLastPassword("demodemo") //
-					.setLoginDateTime(LocalDate.of(2000, 1, 1)) //
+					.setLoginDateTime(LocalDate.of(2000, 1, 1).atStartOfDay()
+							.toInstant(ZoneOffset.UTC)) //
 					.setLoginFlg(true) //
 					.createAuthLogin()) //
 			.createMember();

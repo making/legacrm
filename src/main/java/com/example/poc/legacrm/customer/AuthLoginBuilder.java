@@ -1,12 +1,12 @@
 package com.example.poc.legacrm.customer;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class AuthLoginBuilder {
 
     private String lastPassword;
 
-    private LocalDate loginDateTime;
+    private Instant loginDateTime;
 
     private Boolean loginFlg;
 
@@ -23,7 +23,7 @@ public class AuthLoginBuilder {
         return this;
     }
 
-    public AuthLoginBuilder setLoginDateTime(LocalDate loginDateTime) {
+    public AuthLoginBuilder setLoginDateTime(Instant loginDateTime) {
         this.loginDateTime = loginDateTime;
         return this;
     }

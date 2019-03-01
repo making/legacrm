@@ -7,8 +7,12 @@
 
     <jaxb:globalBindings>
         <jaxb:javaType name="java.time.LocalDate"
-                       xmlType="xs:dateTime"
+                       xmlType="xs:date"
                        parseMethod="com.example.poc.legacrm.ws.LocalDateAdapter.parse"
                        printMethod="com.example.poc.legacrm.ws.LocalDateAdapter.print"/>
+        <jaxb:javaType name="java.time.Instant"
+                       xmlType="xs:dateTime"
+                       parseMethod="com.example.poc.legacrm.ws.InstantAdapter.parse"
+                       printMethod="com.example.poc.legacrm.ws.InstantAdapter.print"/>
     </jaxb:globalBindings>
 </jaxb:bindings>

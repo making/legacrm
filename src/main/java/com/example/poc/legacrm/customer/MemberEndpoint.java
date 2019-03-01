@@ -1,7 +1,7 @@
 package com.example.poc.legacrm.customer;
 
 import java.time.Clock;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,7 +42,7 @@ public class MemberEndpoint {
 		AuthLogin authLogin = member.getAuthLogin();
 		authLogin.setPassword(password);
 		authLogin.setLastPassword(password);
-		authLogin.setLoginDateTime(LocalDate.now(this.clock));
+		authLogin.setLoginDateTime(Instant.now(this.clock));
 		authLogin.setLoginFlg(false);
 		Member created = this.memberRepository.insert(member);
 		return new CreateMemberResponse(created);
