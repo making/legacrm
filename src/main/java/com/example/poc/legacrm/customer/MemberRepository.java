@@ -69,17 +69,18 @@ public class MemberRepository {
 				"INSERT INTO MEMBER (KANJI_FAMILY_NAME, KANJI_GIVEN_NAME, KANA_FAMILY_NAME, KANA_GIVEN_NAME, BIRTHDAY, GENDER, TEL, ZIP_CODE, ADDRESS, MAIL, CREDIT_NO, CREDIT_TYPE_CD, CREDIT_TERM) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
 				member.getKanjiFamilyName(), member.getKanjiGivenName(),
 				member.getKanaFamilyName(), member.getKanaGivenName(),
-				member.getBirthday(), member.getGender(), member.getTel(),
-				member.getZipCode(), member.getMail(), member.getCreditNo(),
-				member.getCreditType().getCreditTypeCd(), member.getCreditTerm());
-		Integer id = this.jdbcTemplate
-				.queryForObject("SELECT last_insert_id() FROM MEMBER", Integer.class);
+				member.getBirthday(), member.getGender().value(), member.getTel(),
+				member.getZipCode(), member.getAddress(), member.getMail(),
+				member.getCreditNo(), member.getCreditType().getCreditTypeCd(),
+				member.getCreditTerm());
+		Integer id = this.jdbcTemplate.queryForObject("SELECT last_insert_id()",
+				Integer.class);
 		AuthLogin authLogin = member.getAuthLogin();
 		this.jdbcTemplate.update(
 				"INSERT INTO MEMBER_LOGIN (CUSTOMER_NO, PASSWORD, LAST_PASSWORD, LOGIN_DATE_TIME, LOGIN_FLG) VALUES (?, ?, ?, ?, ?)",
 				id, authLogin.getPassword(), authLogin.getLastPassword(),
 				Timestamp.from(authLogin.getLoginDateTime()), authLogin.isLoginFlg());
-		member.setMembershipNumber(String.format("%10d", id));
+		member.setMembershipNumber(String.format("%010d", id));
 		return member;
 	}
 }
