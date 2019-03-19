@@ -83,4 +83,25 @@ public class MemberRepository {
 		member.setMembershipNumber(String.format("%010d", id));
 		return member;
 	}
+
+	@Transactional
+	public Member update(Member member) {
+		this.jdbcTemplate.update(
+				"UPDATE MEMBER SET KANJI_FAMILY_NAME=?, KANJI_GIVEN_NAME=?, KANA_FAMILY_NAME=?, KANA_GIVEN_NAME=?, BIRTHDAY=?, GENDER=?, TEL=?, ZIP_CODE=?, ADDRESS=?, MAIL=?, CREDIT_NO=?, CREDIT_TYPE_CD=?, CREDIT_TERM=? WHERE CUSTOMER_NO=?",
+				member.getKanjiFamilyName(), member.getKanjiGivenName(),
+				member.getKanaFamilyName(), member.getKanaGivenName(),
+				member.getBirthday(), member.getGender().value(), member.getTel(),
+				member.getZipCode(), member.getAddress(), member.getMail(),
+				member.getCreditNo(), member.getCreditType().getCreditTypeCd(),
+				member.getCreditTerm(), member.getMembershipNumber());
+		AuthLogin authLogin = member.getAuthLogin();
+		if (authLogin != null && authLogin.getPassword() != null) {
+			this.jdbcTemplate.update(
+					"UPDATE MEMBER_LOGIN SET PASSWORD=?, LAST_PASSWORD=?, LOGIN_DATE_TIME=?, LOGIN_FLG=? WHERE CUSTOMER_NO=?",
+					authLogin.getPassword(), authLogin.getLastPassword(),
+					Timestamp.from(authLogin.getLoginDateTime()), authLogin.isLoginFlg(),
+					member.getMembershipNumber());
+		}
+		return member;
+	}
 }

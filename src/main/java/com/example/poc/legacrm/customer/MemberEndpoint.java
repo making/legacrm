@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -50,7 +51,26 @@ public class MemberEndpoint {
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateMemberRequest")
 	@ResponsePayload
-	public UpdateMemberRequest updateMember(@RequestPayload UpdateMemberRequest request) {
-		throw new UnsupportedOperationException("Not implemented yet!");
+	public UpdateMemberResponse updateMember(
+			@RequestPayload UpdateMemberRequest request) {
+		Member member = request.getMember();
+		String membershipNumber = member.getMembershipNumber();
+		Member current = this.memberRepository.findOne(membershipNumber).orElseThrow(
+				() -> new IllegalArgumentException(membershipNumber + " is not found."));
+		String currentPassword = current.getCurrentPassword();
+		if (!StringUtils.isEmpty(request.getCurrentPassword())) {
+			if (!this.passwordEncoder.matches(request.getCurrentPassword(),
+					currentPassword)) {
+				throw new IllegalArgumentException("Current password is wrong.");
+			}
+			String password = this.passwordEncoder.encode(request.getRawPassword());
+			member.setCurrentPassword(password);
+			AuthLogin authLogin = current.getAuthLogin();
+			authLogin.setPassword(password);
+			authLogin.setLastPassword(currentPassword);
+			member.setAuthLogin(authLogin);
+		}
+		Member updated = this.memberRepository.update(member);
+		return new UpdateMemberResponse(updated);
 	}
 }
