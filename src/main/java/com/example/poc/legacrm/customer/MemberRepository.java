@@ -18,8 +18,8 @@ public class MemberRepository {
 			.setMembershipNumber(String.format("%010d", rs.getInt("CUSTOMER_NO"))) //
 			.setKanjiFamilyName(rs.getString("KANJI_FAMILY_NAME")) //
 			.setKanjiGivenName(rs.getString("KANJI_GIVEN_NAME")) //
-			.setKanaGivenName(rs.getString("KANA_FAMILY_NAME")) //
 			.setKanaFamilyName(rs.getString("KANA_FAMILY_NAME")) //
+			.setKanaGivenName(rs.getString("KANA_GIVEN_NAME")) //
 			.setBirthday(rs.getDate("BIRTHDAY").toLocalDate()) //
 			.setGender(Gender.valueOf(rs.getString("GENDER"))) //
 			.setTel(rs.getString("TEL")) //
